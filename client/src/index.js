@@ -1,93 +1,122 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import MainApp from './App';
 import { BrowserRouter } from 'react-router-dom';
-// import * as serviceWorker from './serviceWorker';
+
+
+class NewUser extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    const newUser = props.newUser;
+    if (newUser) {
+      return (
+        <div>
+          <h1>Register</h1>
+        </div>
+      )
+    }
+    return null;
+  }
+}
+
+
+function GuestGreeting(props) {
+  return <h1>Please sign up.</h1>;//pass a sign in component
+}
 
 //here login the user using civic and see if they have an account and only then
 //allow them to go to App
-
-
-function UserGreeting(props) {
-    return <h1>Welcome back!</h1>;
-  }
-  
-  function GuestGreeting(props) {
-    return <h1>Please sign up.</h1>;
-  }
-
-  function Greeting(props) {
-    const isLoggedIn = props.isLoggedIn;
-    if (isLoggedIn) {
-      return (
-          <div>
-      <UserGreeting />
-        <App />
-        </div>
-        );
-    }
+//need to send user id so we can fetch user info from db
+function App(props) {
+  const isLoggedIn = props.isLoggedIn;
+  if (isLoggedIn) {
+    return (
+      <div>
+        <MainApp userId={2} />
+      </div>
+    );
+  } else {
     return <GuestGreeting />;
   }
-  
+
+}
+
 function LoginButton(props) {
-    return (
-      <button onClick={props.onClick}>
-        Login
+  return (
+    <button onClick={props.onClick}>
+      Login
       </button>
-    );
-  }
-  
-  function LogoutButton(props) {
-    return (
-      <button onClick={props.onClick}>
-        Logout
+  );
+}
+function RegisterButton(props) {
+  return (
+    <button onClick={props.onClick}>
+      Register
       </button>
-    );
-  }
+  );
+}
+
+
+function LogoutButton(props) {
+  return (
+    <button onClick={props.onClick}>
+      Logout
+      </button>
+  );
+}
 
 class LoginControl extends React.Component {
-    constructor(props) {
-      super(props);
-      this.handleLoginClick = this.handleLoginClick.bind(this);
-      this.handleLogoutClick = this.handleLogoutClick.bind(this);
-      this.state = {isLoggedIn: false};
-    }
-  
-    handleLoginClick() {
-      this.setState({isLoggedIn: true});
-    }
-  
-    handleLogoutClick() {
-      this.setState({isLoggedIn: false});
-    }
-  
-    render() {
-      const isLoggedIn = this.state.isLoggedIn;
-      let button;
-  
-      if (isLoggedIn) {
-        button = <LogoutButton onClick={this.handleLogoutClick} /> ;
-      } else {
-        button = <LoginButton onClick={this.handleLoginClick} />;
-      }
-  
-      return (
-        <div>
-          <Greeting isLoggedIn={isLoggedIn} />
-          {button}
-        </div>
-      );
-    }
+  constructor(props) {
+    super(props);
+    this.handleLoginClick = this.handleLoginClick.bind(this);
+    this.handleLogoutClick = this.handleLogoutClick.bind(this);
+    this.handleNewUserClick = this.handleNewUserClick.bind(this);
+
+    this.state = { isLoggedIn: false, newUser: false };
   }
 
-ReactDOM.render(
-    <BrowserRouter>
-    <LoginControl/>
-</BrowserRouter>
-, document.getElementById('root'));
+  handleLoginClick() {
+    this.setState({ isLoggedIn: true });
+  }
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-// serviceWorker.unregister();
+  handleLogoutClick() {
+    this.setState({ isLoggedIn: false });
+  }
+  handleNewUserClick() {
+    this.setState({ newUser: !this.state.newUser });
+  }
+
+  render() {
+    const isLoggedIn = this.state.isLoggedIn;
+    const newUser = this.state.newUser;
+    let buttons;
+
+    if (isLoggedIn) {
+      buttons = <LogoutButton onClick={this.handleLogoutClick} />;
+    } else {
+      buttons = (<div>
+        <LoginButton onClick={this.handleLoginClick} />
+        <RegisterButton onClick={this.handleNewUserClick} />
+      </div>
+      )
+    }
+
+    return (
+      <div>
+        <App isLoggedIn={isLoggedIn} />
+        <NewUser newUser={newUser} />
+        {buttons}
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(
+  <BrowserRouter>
+    <LoginControl />
+  </BrowserRouter>,
+  document.getElementById('root'));
+

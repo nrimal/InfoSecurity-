@@ -1,5 +1,5 @@
-import React from 'react'
-import { Switch, Route } from 'react-router-dom'
+import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 
 const Home = () => <h2>Home</h2>;//show all the website that it has saved password from
 const Edit = () => <h2>About</h2>;//call component to edit exisiting website password
@@ -11,7 +11,6 @@ class Main extends React.Component {
         return (
             <main className="container-fluid">
                 <Switch>
-                    <Route exact path='/' component={Home} />
                     <Route path='/Edit' component={Edit} />
                     <Route path='/Add' component={Add} />
                 </Switch>
