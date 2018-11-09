@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 var pg = require('pg');
+var bodyParser = require('body-parser');
 
 
 var conString = "postgres://vzqhvtnq:YVJl85B7GskzuRJjZY7Scbty9LAXhZ7R@pellefant.db.elephantsql.com:5432/vzqhvtnq";
@@ -20,8 +21,11 @@ var client = new pg.Client(conString);
 //   });
 // });
 
+app.use(bodyParser.json())
+app.use(express.static(__dirname + '/client/public'));
+
 app.get('/api/customers/:userId', (req, res) => {
-  console.log(JSON.stringify(req.params.userId));
+  console.log(req.params.userId);
   const customers = [
     {id: 1, firstName: 'John', lastName: 'Doe'},
     {id: 2, firstName: 'Brad', lastName: 'Traversy'},
@@ -32,5 +36,4 @@ app.get('/api/customers/:userId', (req, res) => {
 });
 
 const port = 5000;
-
-app.listen(port, () => `Server running on port ${port}`);
+app.listen(port, () => console.log("Server running on port " + port));
