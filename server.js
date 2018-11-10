@@ -71,13 +71,14 @@ Would need to fetch from stuff from civic
 app.post('/api/addnewvalues', (req, res) => {
   var values = [];
   values.push(req.body.userId);
-  values.push(req.body.websiteName);
-  values.push(req.body.username);
+  values.push(req.body.website_name);
+  values.push(req.body.user_name);
   values.push(req.body.password);
   addNewWebsite(values);
 });
 
 app.get('/api/users/:userId', (req, res) => {
+  console.log("test");
   var values = [req.params.userId];
   fetchCurrentUser(values, res);
 });

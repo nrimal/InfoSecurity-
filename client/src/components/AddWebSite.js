@@ -28,8 +28,8 @@ class AddWebSite extends Component {
     handleSubmit(event) {
         event.preventDefault();
         var objToSend = {
-            websiteName: this.state.websiteName,
-            username: this.state.username,
+            website_name: this.state.websiteName,
+            user_name: this.state.username,
             password: this.state.password,
             userId: this.props.params.userId
         };
@@ -40,7 +40,7 @@ class AddWebSite extends Component {
             },
             body: JSON.stringify(objToSend)
         });
-        console.log("test");
+        this.props.params.websites.push(objToSend);
         this.props.params.closeWindow();
         // closeWindow();
     }
