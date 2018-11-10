@@ -1,41 +1,65 @@
 import React, { Component } from 'react';
 import './addWebSite.css';
 
-class AddLayout extends Component {
+class AddWebSite extends Component {
     constructor(props) {
         super(props);
-        this.state = { website: '', username: '', password: '' };
+        this.state = { websiteName: '', username: '', password: '' };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     handleChange(event) {
-        this.setState({ website: event.target.website });
-        this.setState({ username: event.target.username });
-        this.setState({ password: event.target.password });
+        var value = event.target.name;
+        switch (value) {
+            case "websiteName":
+                this.setState({ websiteName: event.target.value });
+                break;
+            case "username":
+                this.setState({ username: event.target.value });
+                break;
+            case "password":
+                this.setState({ password: event.target.value });
+                break;
+            default:
+                break;
+        }
     }
 
     handleSubmit(event) {
         event.preventDefault();
-        const { closeWindow } = this.props;
-        closeWindow();
+        var objToSend = {
+            websiteName: this.state.websiteName,
+            username: this.state.username,
+            password: this.state.password,
+            userId: this.props.params.userId
+        };
+        fetch('/api/addnewvalues', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(objToSend)
+        });
+        console.log("test");
+        this.props.params.closeWindow();
+        // closeWindow();
     }
     render() {
 
         return (
-
             <div className="popup">
                 <form onSubmit={this.handleSubmit}>
                     <label>
                         Website Name:
-          <input type="text" value={this.state.website} onChange={this.handleChange} />
+          <input type="text" name="websiteName" value={this.state.websiteName} onChange={this.handleChange} />
                     </label>
                     <label>
                         Username:
-          <input type="text" value={this.state.username} onChange={this.handleChange} />
+          <input type="text" name="username" value={this.state.username} onChange={this.handleChange} />
                     </label>
                     <label>
                         Password:
-          <input type="password" value={this.state.password} onChange={this.handleChange} />
+          <input type="password" name="password" value={this.state.password} onChange={this.handleChange} />
                     </label>
                     <input type="submit" value="Submit" />
                 </form>
@@ -52,4 +76,4 @@ class AddLayout extends Component {
 
 
 
-export default AddLayout;
+export default AddWebSite;

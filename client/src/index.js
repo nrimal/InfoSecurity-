@@ -6,11 +6,8 @@ import { BrowserRouter } from 'react-router-dom';
 
 
 class NewUser extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
-    const newUser = props.newUser;
+    const newUser = this.props.newUser;
     if (newUser) {
       return (
         <div>
@@ -29,13 +26,14 @@ function GuestGreeting(props) {
 
 //here login the user using civic and see if they have an account and only then
 //allow them to go to App
-//need to send user id so we can fetch user info from db
+//need to send user id so we can fetch user info from db 
+//user id refers to civic id that is generated unique for each user
 function App(props) {
   const isLoggedIn = props.isLoggedIn;
   if (isLoggedIn) {
     return (
       <div>
-        <MainApp userId={2} />
+        <MainApp userId={1} />
       </div>
     );
   } else {

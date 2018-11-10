@@ -1,34 +1,85 @@
+const bodyParser = require('body-parser');
 const express = require('express');
 const app = express();
 var pg = require('pg');
+const conString = "postgres://vzqhvtnq:YVJl85B7GskzuRJjZY7Scbty9LAXhZ7R@pellefant.db.elephantsql.com:5432/vzqhvtnq";
 
-
-var conString = "postgres://vzqhvtnq:YVJl85B7GskzuRJjZY7Scbty9LAXhZ7R@pellefant.db.elephantsql.com:5432/vzqhvtnq";
 var client = new pg.Client(conString);
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
-// client.connect(function(err) {
-//   if(err) {
-//     return console.error('could not connect to postgres', err);
-//   }
-//   client.query('SELECT NOW() AS "theTime"', function(err, result) {
-//     if(err) {
-//       return console.error('error running query', err);
-//     }
-//     console.log(result.rows[0].theTime);
-//     // >> output: 2018-08-23T14:02:57.117Z
-//     client.end();
-//   });
-// });
+client.connect();
 
-app.get('/api/customers/:userId', (req, res) => {
-  console.log(JSON.stringify(req.params.userId));
-  const customers = [
-    {id: 1, firstName: 'John', lastName: 'Doe'},
-    {id: 2, firstName: 'Brad', lastName: 'Traversy'},
-    {id: 3, firstName: 'Mary', lastName: 'Swanson'},
-  ];
+/*
+CREATE TABLE PASSWORD_HOLDERS (
+ID VARCHAR(255),
+WEBSITE_NAME VARCHAR(255),
+USER_NAME VARCHAR(255),
+PASSWORD VARCHAR(255),
+CONSTRAINT unique_key PRIMARY KEY(USER_NAME,PASSWORD,WEBSITE_NAME)
+);
+/////////////////
+CREATE TABLE USERS (
+ID VARCHAR(255) PRIMARY KEY,
+FIRST_NAME VARCHAR(255),
+LAST_NAME VARCHAR(255),
+USER_NAME VARCHAR(255)
+);
+*/
 
-  res.json(customers);
+
+/*
+Query for adding new users to DB
+*/
+var addNewUsers = function (values) {
+  console.log("test123");
+  
+  client.query('INSERT INTO USERS (ID, FIRST_NAME, LAST_NAME, USER_NAME) VALUES($1, $2, $3, $4)', values, (err, result) => {
+    if (err) {
+      return console.error('error running query', err);
+    }
+  });
+};
+
+/*
+Query for adding new website password to db
+*/
+var addNewWebsite = function (values) {
+  console.log("test"); 
+  client.query('INSERT INTO PASSWORD_HOLDERS(ID, WEBSITE_NAME, USER_NAME, PASSWORD) VALUES($1, $2, $3, $4)', values, (err, result) => {
+    if (err) { //could be constrain is being violated
+      return console.error('error running query', err);
+    }
+  });
+};
+
+var fetchCurrentUser = function (values, cb) {
+  client.query('SELECT WEBSITE_NAME,USER_NAME,PASSWORD FROM PASSWORD_HOLDERS s WHERE s.id=$1', values, (err, result) => {
+    if (err) {
+      // cb.send("error");
+      return console.error('error running query', err);
+    }
+    cb.json(result.rows);
+  });
+};
+
+/*
+Post call to post data of new users to db
+Need to make sure req body matches the object/values needed to add to db
+Would need to fetch from stuff from civic 
+*/
+app.post('/api/addnewvalues', (req, res) => {
+  var values = [];
+  values.push(req.body.userId);
+  values.push(req.body.websiteName);
+  values.push(req.body.username);
+  values.push(req.body.password);
+  addNewWebsite(values);
+});
+
+app.get('/api/users/:userId', (req, res) => {
+  var values = [req.params.userId];
+  fetchCurrentUser(values, res);
 });
 
 const port = 5000;

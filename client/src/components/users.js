@@ -6,41 +6,43 @@ class Users extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      customers: [],
+      websites: [],
       userId: props.userId,
       copied:false
     };
   }
 
   componentDidMount() {
-    fetch('/api/customers/'+this.state.userId)
+    fetch('/api/users/'+this.state.userId)
       .then(res => res.json())
-      .then(customers => this.setState({customers}, () => console.log('Customers fetched...', customers)));
+      .then(websites => this.setState({websites}, () => console.log('Customers fetched...', websites)));
   }
-//   <input value={this.state.value}
-//   onChange={({target: {value}}) => this.setState({value, copied: false})} />
-
-// <CopyToClipboard text={this.state.value}
-// onCopy={() => this.setState({copied: true})}>
-// <button>Copy to clipboard with button</button>
-// </CopyToClipboard>
-
 
   render() {
     return (
-      <div>
-        <h2>Customers {this.state.userId}</h2>
-        <ul>
-        {this.state.customers.map(customer => 
-          <li key={customer.id}>{customer.firstName}
-          <input value={customer.lastName} type="password" onChange={()=>{
-            {}}}></input>
-          <CopyToClipboard text={customer.lastName}>
+      <div className="html-center">
+
+        <table>
+        {/* <h2>{this.state.userId}</h2> */}
+          <tr>
+            <th>Website Name</th>
+            <th>User Name</th>
+            <th>Password</th>
+          </tr>
+        {this.state.websites.map(website => 
+          <tr key={website.website_name}>
+          <th>  {website.website_name}  </th>
+          <th>{website.user_name}</th>
+          <th>
+          <input value={website.password} type="password" ></input>
+          <CopyToClipboard text={website.password}>
           <button>Copy to clipboard with button</button>
           </CopyToClipboard>
-          </li> 
+          </th>
+          </tr> 
         )}
-        </ul>
+        </table>
+        
       </div>
     );
   }
