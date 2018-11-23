@@ -4,9 +4,6 @@ import './App.css';
 import Users from './components/users';
 import Routes from './components/Routes';
 
-
-
-
 class App extends Component {
   constructor(props) {
     super(props);

@@ -3,3 +3,44 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+.civic-button {
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  max-width: 300px;
+  height: 50px;
+  line-height: 50px;
+  padding: 0 50px 0 62px;
+  border-radius: 100px;
+  background-color: #3AB03E;
+  color: #FFFFFF;
+  font-size: 18px;
+  font-weight: 400;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+.civic-button:hover {
+  background-color: #008C04;
+}
+.civic-button-light {
+  line-height: 50px;
+  border: 1px solid #EBEBEB;
+  color: #202121;
+  background-color: #FFFFFF;
+  box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.2);
+
+}
+.civic-button-light:hover {
+  background-color: #F7F9FA;
+}
+.civic-button-small {
+  min-width: 120px;
+  padding: 0 40px 0 52px;
+}
+.civic-button .civic-logo-icon {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+}

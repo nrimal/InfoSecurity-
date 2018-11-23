@@ -4,7 +4,6 @@ import './index.css';
 import MainApp from './App';
 import { BrowserRouter } from 'react-router-dom';
 
-
 class NewUser extends React.Component {
   render() {
     const newUser = this.props.newUser;
@@ -19,72 +18,71 @@ class NewUser extends React.Component {
   }
 }
 
-
 function GuestGreeting(props) {
   return <h1>Please sign up.</h1>;//pass a sign in component
 }
 
-//here login the user using civic and see if they have an account and only then
-//allow them to go to App
-//need to send user id so we can fetch user info from db 
-//user id refers to civic id that is generated unique for each user
 function App(props) {
   const isLoggedIn = props.isLoggedIn;
+  const userId = props.userId;
   if (isLoggedIn) {
     return (
       <div>
-        <MainApp userId={1} />
+        <MainApp userId={userId} />
       </div>
     );
   } else {
     return <GuestGreeting />;
   }
-
 }
 
 function LoginButton(props) {
   return (
-    <button onClick={props.onClick}>
-      Login
-      </button>
+    <button id="loginButton" className="civic-button" type="button" onClick={props.onClick}>
+      <span>Log in with Civic</span>
+    </button>
   );
 }
-function RegisterButton(props) {
-  return (
-    <button onClick={props.onClick}>
-      Register
-      </button>
-  );
-}
-
 
 function LogoutButton(props) {
   return (
     <button onClick={props.onClick}>
       Logout
-      </button>
+    </button>
   );
 }
 
 class LoginControl extends React.Component {
   constructor(props) {
     super(props);
+    this.civicSip = new window.civic.sip({ appId: 'IhZJODaBT' });
     this.handleLoginClick = this.handleLoginClick.bind(this);
     this.handleLogoutClick = this.handleLogoutClick.bind(this);
-    this.handleNewUserClick = this.handleNewUserClick.bind(this);
-
+    this.componentDidMount = this.componentDidMount.bind(this);
     this.state = { isLoggedIn: false, newUser: false };
   }
 
+  componentDidMount() {
+    this.civicSip.on('auth-code-received', function (event) {
+      fetch('/api/sendAuth/'+ event.response, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+      }).then(res => res.json())
+      .then(userId => {
+        this.userId = userId;
+        this.setState({ isLoggedIn: true });
+      })
+    });
+  }
+
   handleLoginClick() {
-    this.setState({ isLoggedIn: true });
+    this.civicSip.signup({ style: 'popup', scopeRequest: this.civicSip.ScopeRequests.BASIC_SIGNUP });
   }
 
   handleLogoutClick() {
     this.setState({ isLoggedIn: false });
-  }
-  handleNewUserClick() {
-    this.setState({ newUser: !this.state.newUser });
   }
 
   render() {
@@ -97,7 +95,6 @@ class LoginControl extends React.Component {
     } else {
       buttons = (<div>
         <LoginButton onClick={this.handleLoginClick} />
-        <RegisterButton onClick={this.handleNewUserClick} />
       </div>
       )
     }
