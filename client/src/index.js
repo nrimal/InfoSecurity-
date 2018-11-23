@@ -63,6 +63,7 @@ class LoginControl extends React.Component {
   }
 
   componentDidMount() {
+    var that = this;
     this.civicSip.on('auth-code-received', function (event) {
       fetch('/api/sendAuth/'+ event.response, {
         method: 'GET',
@@ -70,9 +71,9 @@ class LoginControl extends React.Component {
             'Content-Type': 'application/json',
         }
       }).then(res => res.json())
-      .then(userId => {
+      .then( (userId) => {
         this.userId = userId;
-        this.setState({ isLoggedIn: true });
+        that.setState({ isLoggedIn: true });
       })
     });
   }
