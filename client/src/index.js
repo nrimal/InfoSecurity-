@@ -4,22 +4,8 @@ import './index.css';
 import MainApp from './App';
 import { BrowserRouter } from 'react-router-dom';
 
-class NewUser extends React.Component {
-  render() {
-    const newUser = this.props.newUser;
-    if (newUser) {
-      return (
-        <div>
-          <h1>Register</h1>
-        </div>
-      )
-    }
-    return null;
-  }
-}
-
 function GuestGreeting(props) {
-  return <h1>Please sign up.</h1>;//pass a sign in component
+  return <h1>Please sign up.</h1>;
 }
 
 function App(props) {
@@ -59,7 +45,7 @@ class LoginControl extends React.Component {
     this.handleLoginClick = this.handleLoginClick.bind(this);
     this.handleLogoutClick = this.handleLogoutClick.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
-    this.state = { isLoggedIn: false, newUser: false };
+    this.state = { isLoggedIn: false, userId: 0 };
   }
 
   componentDidMount() {
@@ -71,9 +57,8 @@ class LoginControl extends React.Component {
             'Content-Type': 'application/json',
         }
       }).then(res => res.json())
-      .then( (userId) => {
-        this.userId = userId;
-        that.setState({ isLoggedIn: true });
+      .then(userId => {
+        that.setState({ isLoggedIn: true, userId: userId });
       })
     });
   }
@@ -88,7 +73,7 @@ class LoginControl extends React.Component {
 
   render() {
     const isLoggedIn = this.state.isLoggedIn;
-    const newUser = this.state.newUser;
+    const userId = this.state.userId;
     let buttons;
 
     if (isLoggedIn) {
@@ -102,8 +87,7 @@ class LoginControl extends React.Component {
 
     return (
       <div>
-        <App isLoggedIn={isLoggedIn} />
-        <NewUser newUser={newUser} />
+        <App isLoggedIn={isLoggedIn} userId={userId}/>
         {buttons}
       </div>
     );

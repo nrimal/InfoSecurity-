@@ -21,7 +21,7 @@ class Users extends Component {
       copied: false,
       addNewWebsite: false
     };
-
+    console.log('PROPS ' + props.userId);
     this.handleNewWebsite = this.handleNewWebsite.bind(this);
     this.closeWindow = this.closeWindow.bind(this);
 
