@@ -18,6 +18,7 @@ Would need to fetch from stuff from civic
 */
 app.post('/api/addnewvalues', (req, res) => {
   var values = [];
+  console.log(req.body);
   values.push(req.body.userId);
   values.push(req.body.website_name);
   values.push(req.body.user_name);
