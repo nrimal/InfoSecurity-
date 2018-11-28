@@ -33,6 +33,8 @@ app.get('/api/sendAuth/:jwt', (req, res) => {
         db.addNewUsers([userId, '', '', '']);
       }
       res.json(userId);
+    }).catch(err => {
+      res.send(500);
     });
   });
 });
@@ -53,7 +55,7 @@ app.delete('/api/delete/user', (req, res) => {
 });
 
 app.get('/api/user', (req, res) => {
-  db.getUser(res);
+  db.getUsers(res);
 });
 
 const port = 5000;
