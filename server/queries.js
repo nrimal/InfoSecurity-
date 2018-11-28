@@ -5,7 +5,6 @@ var hasher = require('object-hash');
 
 var client = new pg.Client(config.db);
 client.connect();
-let baseCrptr = new Cryptr(config.civic.prvKey);
 
 module.exports = {
     addNewUsers: function (values) {
@@ -52,6 +51,7 @@ module.exports = {
       });
     },
     deleteWebsite: function (values, cb) {
+      values[0] = hasher.MD5(values[0]);
       client.query('DELETE FROM PASSWORD_HOLDERS s WHERE s.id=$1 AND s.website_name=$2', values, (err, result) => {
         if (err) {
           return console.error('error running query', err);

@@ -11,6 +11,13 @@ function AddNewSites(props) {
   )
 }
 
+function Remove(props) {
+  return (
+    <button type="button" onClick={props.onClick}>
+      <span className="glyphicon glyphicon-minus" aria-hidden="true"></span>
+    </button>
+  )
+}
 
 class Users extends Component {
   constructor(props) {
@@ -23,6 +30,7 @@ class Users extends Component {
     };
     this.handleNewWebsite = this.handleNewWebsite.bind(this);
     this.closeWindow = this.closeWindow.bind(this);
+    this.handleRemove = this.handleRemove.bind(this);
 
   }
   handleNewWebsite() {
@@ -37,6 +45,23 @@ class Users extends Component {
     fetch('/api/users/' + this.state.userId)
       .then(res => res.json())
       .then(websites => this.setState({ websites }, () => console.log('Customers fetched...', websites)));
+  }
+
+  handleRemove(website_name) {
+    fetch('/api/delete/website', {
+      method: 'DELETE',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userId: this.state.userId,
+        website_name: website_name
+      })
+    }).then(() => {
+      fetch('/api/users/' + this.state.userId)
+      .then(res => res.json())
+      .then(websites => this.setState({ websites }, () => console.log('Customers fetched...', websites)));
+    });
   }
 
   render() {
@@ -58,30 +83,36 @@ class Users extends Component {
 
     return (
       <div className="html-center">
-
         <table>
-          {/* <h2>{this.state.userId}</h2> */}
-          <tr>
-            <th>Website Name</th>
-            <th>User Name</th>
-            <th>Password</th>
-          </tr>
-          {this.state.websites.map(website =>
-            <tr key={website.website_name}>
-              <th>  {website.website_name}  </th>
-              <th>{website.user_name}</th>
-              <th>
-                <input value={website.password} type="password" ></input>
-                <CopyToClipboard text={website.password}>
-                  <button>Copy</button>
-                </CopyToClipboard>
-              </th>
+          <thead>
+            {/* <h2>{this.state.userId}</h2> */}
+            <tr>
+              <th>Website Name</th>
+              <th>User Name</th>
+              <th>Password</th>
+              <th>Remove</th>
             </tr>
-          )}
+          </thead>
+          <tbody>
+            {this.state.websites.map(website =>
+              <tr key={website.website_name}>
+                <td>{website.website_name}</td>
+                <td>{website.user_name}</td>
+                <td>
+                  <input value={website.password} type="password" ></input>
+                  <CopyToClipboard text={website.password}>
+                    <button>Copy</button>
+                  </CopyToClipboard>
+                </td>
+                <td>
+                  <Remove onClick={() => this.handleRemove(website.website_name)}></Remove>
+                </td>
+              </tr>
+            )}
+          </tbody>
         </table>
         {buttons}
         {popup}
-
       </div>
     );
   }
