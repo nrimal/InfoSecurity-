@@ -74,7 +74,7 @@ class Users extends Component {
               <th>
                 <input value={website.password} type="password" ></input>
                 <CopyToClipboard text={website.password}>
-                  <button>Copy to clipboard with button</button>
+                  <button>Copy</button>
                 </CopyToClipboard>
               </th>
             </tr>

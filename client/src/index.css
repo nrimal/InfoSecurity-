@@ -1,17 +1,70 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
+  background-repeat: no-repeat
+  
+}
+
+.header {
+  text-align: center;
+  color: #FFFFFFFF;
+  font-weight:200;
+  font-family: 'Source Sans Pro', sans-serif;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #3AB03E), color-stop(100%,rgb(0, 163, 163) ));
+  padding: 60px 0 60px 0;
+}
+
+.info {
+  text-align: center;
+  color: #6f7272;
+  font-weight:200;
+  font-family: 'Source Sans Pro', sans-serif;
+  padding: 20px 80px 20px 80px;
+}
+
+.info p {
+  color: #202121;
+}
+
+#howToList {
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  width: 80%;
+  height: 300px;
+
+ 
+}
+
+#howToList li {
+  display: inline-block;
+  color: #202121;
+  border-color: #FFFFFF;
+  padding-right: 20px;
+}
+
+.login {
+  text-align: center;
+  font-weight:200;
+  font-family: 'Source Sans Pro', sans-serif;
+  padding: 30px 0 90px 0;
 }
 .civic-button {
+  margin-top: 10px;
   display: inline-block;
-  position: relative;
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
   box-sizing: border-box;
   max-width: 300px;
-  height: 50px;
+  height: 60px;
   line-height: 50px;
-  padding: 0 50px 0 62px;
+  padding: 0 70px 0 70px;
   border-radius: 100px;
+
   background-color: #3AB03E;
   color: #FFFFFF;
   font-size: 18px;
@@ -22,7 +75,7 @@ body {
   font-family: 'Source Sans Pro', sans-serif;
 }
 .civic-button:hover {
-  background-color: #008C04;
+  background-color:rgba(0,128,128,1);
 }
 .civic-button-light {
   line-height: 50px;

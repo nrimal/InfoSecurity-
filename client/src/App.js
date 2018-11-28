@@ -11,13 +11,15 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <Routes />
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">React Express Starter</h1>
-        </header>
-        <Users userId={this.props.userId} />
+      <div>
+        <div className="App">
+          <Routes />
+          <header className="App-header">
+            <img src={logo} className="App-logo" alt="logo" />
+            <h1 className="App-title">Your Passwords</h1>
+          </header>
+          <Users userId={this.props.userId} />
+        </div>
       </div>
     );
   }

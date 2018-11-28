@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import MainApp from './App';
 import { BrowserRouter } from 'react-router-dom';
+import NavigationBar from './components/navbar'
+import InformationText from './components/info';
 
 class NewUser extends React.Component {
   render() {
@@ -19,7 +21,13 @@ class NewUser extends React.Component {
 }
 
 function GuestGreeting(props) {
-  return <h1>Please sign up.</h1>;//pass a sign in component
+  return (
+  <div>
+    <div className="header">
+      <h1>Welcome to Civic Password Manager</h1>
+    </div>
+  </div>
+  );//pass a sign in component
 }
 
 function App(props) {
@@ -46,7 +54,7 @@ function LoginButton(props) {
 
 function LogoutButton(props) {
   return (
-    <button onClick={props.onClick}>
+    <button onClick={props.onClick} className="civic-button">
       Logout
     </button>
   );
@@ -90,21 +98,33 @@ class LoginControl extends React.Component {
     const isLoggedIn = this.state.isLoggedIn;
     const newUser = this.state.newUser;
     let buttons;
+    let info;
 
     if (isLoggedIn) {
       buttons = <LogoutButton onClick={this.handleLogoutClick} />;
+      info = <div></div>;
     } else {
       buttons = (<div>
         <LoginButton onClick={this.handleLoginClick} />
       </div>
-      )
+      );
+      info = <InformationText />
     }
 
     return (
+      
       <div>
+        <div>
+          <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600" rel="stylesheet" />  
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        </div>
+
+        <NavigationBar />
         <App isLoggedIn={isLoggedIn} />
         <NewUser newUser={newUser} />
-        {buttons}
+        <div className="login">{buttons}</div>
+        {info}
       </div>
     );
   }

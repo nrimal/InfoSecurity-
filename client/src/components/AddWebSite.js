@@ -48,20 +48,20 @@ class AddWebSite extends Component {
 
         return (
             <div className="popup">
-                <form onSubmit={this.handleSubmit}>
+                <form className="addSiteForm" onSubmit={this.handleSubmit}>
                     <label>
                         Website Name:
-          <input type="text" name="websiteName" value={this.state.websiteName} onChange={this.handleChange} />
+          <input className="addSiteInput" type="text" name="websiteName" value={this.state.websiteName} onChange={this.handleChange} />
                     </label>
                     <label>
                         Username:
-          <input type="text" name="username" value={this.state.username} onChange={this.handleChange} />
+          <input className="addSiteInput" type="text" name="username" value={this.state.username} onChange={this.handleChange} />
                     </label>
                     <label>
                         Password:
-          <input type="password" name="password" value={this.state.password} onChange={this.handleChange} />
+          <input className="addSiteInput" type="password" name="password" value={this.state.password} onChange={this.handleChange} />
                     </label>
-                    <input type="submit" value="Submit" />
+                    <input className="submit" type="submit" value="Submit" />
                 </form>
             </div>
         );
