@@ -5,7 +5,7 @@ import AddWebSite from './AddWebSite';
 
 function AddNewSites(props) {
   return (
-    <button onClick={props.onClick}>
+    <button onClick={props.onClick} className="btn btn-success mt-2 mr-2">
       Add
     </button>
   )
@@ -13,8 +13,8 @@ function AddNewSites(props) {
 
 function Remove(props) {
   return (
-    <button type="button" onClick={props.onClick}>
-      <span className="glyphicon glyphicon-minus" aria-hidden="true"></span>
+    <button type="button" className="btn btn-danger" onClick={props.onClick}>
+      Remove
     </button>
   )
 }
@@ -101,7 +101,7 @@ class Users extends Component {
                 <td>
                   <input value={website.password} type="password" ></input>
                   <CopyToClipboard text={website.password}>
-                    <button>Copy</button>
+                    <button className="btn btn-success ml-2">Copy</button>
                   </CopyToClipboard>
                 </td>
                 <td>
@@ -111,8 +111,8 @@ class Users extends Component {
             )}
           </tbody>
         </table>
-        {buttons}
-        {popup}
+        <div className="float-right">{buttons}</div>
+        <div className="mt-5">{popup}</div>
       </div>
     );
   }
