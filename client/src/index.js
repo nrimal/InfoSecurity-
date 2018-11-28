@@ -65,6 +65,7 @@ class LoginControl extends React.Component {
 
   handleLoginClick() {
     this.civicSip.signup({ style: 'popup', scopeRequest: this.civicSip.ScopeRequests.BASIC_SIGNUP });
+    //this.setState({ isLoggedIn: true, userId: 1 });
   }
 
   handleLogoutClick() {
