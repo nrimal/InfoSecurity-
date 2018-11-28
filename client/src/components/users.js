@@ -21,7 +21,6 @@ class Users extends Component {
       copied: false,
       addNewWebsite: false
     };
-
     this.handleNewWebsite = this.handleNewWebsite.bind(this);
     this.closeWindow = this.closeWindow.bind(this);
 

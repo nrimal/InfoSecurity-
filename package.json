@@ -16,9 +16,11 @@
     "nodemon": "^1.14.6"
   },
   "dependencies": {
+    "bcrypt": "^3.0.2",
     "body-parser": "^1.18.3",
     "civic-sip-api": "^1.0.2",
     "concurrently": "^3.5.1",
+    "cryptr": "^4.0.2",
     "express": "^4.16.2",
     "morgan": "^1.9.1",
     "pg": "^7.6.1",
@@ -28,7 +30,8 @@
     "react-dom": "^16.6.3",
     "react-popup": "^0.9.3",
     "react-router-dom": "^4.3.1",
-    "react-sidebar": "^3.0.2"
+    "react-sidebar": "^3.0.2",
+    "sql-injection": "0.0.6"
   },
   "repository": {
     "type": "git",

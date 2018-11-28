@@ -61,7 +61,7 @@ class AddWebSite extends Component {
                         Password:
           <input className="addSiteInput" type="password" name="password" value={this.state.password} onChange={this.handleChange} />
                     </label>
-                    <input className="submit" type="submit" value="Submit" />
+                    <input id="submit" type="submit" value="Submit" />
                 </form>
             </div>
         );
