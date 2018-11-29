@@ -9,9 +9,8 @@ const Cryptr = require('cryptr');
 const app = express();
 
 //app.use(bodyParser.urlencoded({ extended: false }))
-
-app.use(bodyParser.json())
 //app.use(sqlinjection);
+app.use(bodyParser.json())
 app.use(logger(':method :url :status :res[content-length] - :response-time ms'))
 
 

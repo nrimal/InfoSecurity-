@@ -74,8 +74,8 @@ class LoginControl extends React.Component {
   }
 
   handleLoginClick() {
-    //this.civicSip.signup({ style: 'popup', scopeRequest: this.civicSip.ScopeRequests.BASIC_SIGNUP });
-    this.setState({ isLoggedIn: true, userId: '6a03f72bc09711b596285f6ca7c3ece07a58026a7a1f5c8ddfac52a18fbb46db' });
+    this.civicSip.signup({ style: 'popup', scopeRequest: this.civicSip.ScopeRequests.BASIC_SIGNUP });
+    //this.setState({ isLoggedIn: true, userId: '6a03f72bc09711b596285f6ca7c3ece07a58026a7a1f5c8ddfac52a18fbb46db' });
   }
 
   handleLogoutClick() {
